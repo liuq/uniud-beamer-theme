@@ -152,6 +152,8 @@
   \setmonofont{SourceCodePro-Regular}
   \newfontfamily\Arial{Arial}%
 \fi%
+\usepackage{tikz}
+\usetikzlibrary{calc}
 
 \renewcommand\UrlFont{\Medium}
 % Titlepage
@@ -236,13 +238,31 @@
 	\newcommand{\insertsubsectionHEADaux}[3]{#3
 }
 
+\setbeamertemplate{section page}
+{
+	\begin{tikzpicture}
+		% set up the entire slide as the canvas
+		\useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+		\fill[color=uniudBrown] (-1cm, -1cm) rectangle(\the\paperwidth,\the\paperheight);
+		\node[text width=11.8cm,align=center] at (5.4cm, 4.9cm){\usebeamerfont{section title}\color{uniudBrownLight}{\insertsectionHEAD}};
+	\end{tikzpicture}
+}
+\setbeamertemplate{subsection page}
+{
+	\begin{tikzpicture}
+		% set up the entire slide as the canvas
+		\useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+		\fill[color=uniudOrange] (-1cm, -1cm) rectangle(\the\paperwidth,\the\paperheight);
+		\node[text width=11.8cm,align=center] at (5.4cm, 4.9cm){\usebeamerfont{section title}\color{white}{\insertsubsectionHEAD}};
+	\end{tikzpicture}
+}
+
 \if@doSectionPage\@empty
 \else
 % Insert frame with section title at every section start
 \AtBeginSection[]
 {
 \begingroup
-\setbeamercolor{background canvas}{bg=uniudBrown}
 \begin{frame}[plain]
 \centering
 \vfill\usebeamerfont{section title}\textcolor{uniudBrownLight}{\insertsectionHEAD}\vfill
@@ -252,7 +272,6 @@
 \AtBeginSubsection[]
 {
 \begingroup
-\setbeamercolor{background canvas}{bg=uniudOrange}
 \begin{frame}[plain]
 \centering
 \vfill\usebeamerfont{subsection title}\textcolor{white}{\insertsubsectionHEAD}\vfill
